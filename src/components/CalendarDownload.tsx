@@ -50,15 +50,75 @@ function ShareButton({ url }: { url: string }) {
   );
 }
 
+function buildShareAllText(events: SchoolEvent[]): string {
+  const lines = events.map((event) => {
+    const date = new Date(event.date + "T00:00:00").toLocaleDateString("en-SG", {
+      weekday: "short",
+      day: "numeric",
+      month: "short",
+    });
+    const url = generateGoogleCalendarUrl(event);
+    return `${event.title} (${date})\n${url}`;
+  });
+  return `School Events\n\n${lines.join("\n\n")}`;
+}
+
+function ShareAllButton({ events }: { events: SchoolEvent[] }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleShareAll = async () => {
+    const text = buildShareAllText(events);
+
+    if (navigator.share) {
+      try {
+        await navigator.share({ text });
+        return;
+      } catch {
+        // User cancelled or share failed, fall through to copy
+      }
+    }
+
+    await navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <button
+      onClick={handleShareAll}
+      className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-6 rounded-xl transition-colors text-sm active:scale-[0.98]"
+    >
+      {copied ? (
+        <>
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+          Copied all links!
+        </>
+      ) : (
+        <>
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+          </svg>
+          Share all events
+        </>
+      )}
+    </button>
+  );
+}
+
 export function CalendarDownload({ icsContent, eventCount, events }: CalendarDownloadProps) {
   if (eventCount === 0) return null;
 
   return (
     <div className="sticky bottom-4 mt-6 space-y-2">
-      {/* Google Calendar - primary action for mobile */}
+      {/* Share all - primary action */}
+      <ShareAllButton events={events} />
+
+      {/* Google Calendar - individual event links */}
       <div className="bg-white rounded-xl border border-gray-200 shadow-lg p-3">
         <p className="text-xs font-medium text-gray-500 mb-2 text-center">
-          Tap each event to add to Google Calendar
+          Or tap each event to add to your Google Calendar
         </p>
         <div className="space-y-1.5">
           {events.map((event, i) => {

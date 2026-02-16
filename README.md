@@ -14,7 +14,7 @@ A mobile-friendly web app that extracts calendar events from school PDF communic
 
 - **AI-powered extraction** using OpenAI GPT-4o vision - handles diverse PDF formats including multi-page letters, exam timetables, event posters, and field trip notices
 - **Google Calendar integration** - one-tap event links with timezone support (Asia/Singapore)
-- **Two reminders per event** - 1 day before and 30 minutes before (via .ics download)
+- **Two reminders per event** - 1 day before and 30 minutes before (via .ics download; for Google Calendar links, see [CalendarSetup.md](CalendarSetup.md))
 - **Share event links** - native share sheet on mobile, clipboard copy on desktop
 - **Customizable AI prompt** - adjust the extraction instructions to your needs
 - **Customizable output fields** - enable/disable fields like location, attire, things to bring
