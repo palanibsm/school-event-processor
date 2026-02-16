@@ -1,15 +1,19 @@
 {
-  "name": "school-event-processor-temp",
+  "name": "school-event-processor",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "postinstall": "node -e \"require('fs').cpSync('node_modules/pdfjs-dist/build/pdf.worker.min.mjs','public/pdf.worker.min.mjs')\""
   },
   "dependencies": {
+    "ics": "^3.8.1",
     "next": "16.1.6",
+    "openai": "^6.22.0",
+    "pdfjs-dist": "^5.4.624",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },

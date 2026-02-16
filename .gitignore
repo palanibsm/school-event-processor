@@ -36,6 +36,12 @@ yarn-error.log*
 # vercel
 .vercel
 
+# PDF.js worker (auto-copied by postinstall)
+public/pdf.worker.min.mjs
+
+# Sample PDFs (may contain personal school data)
+/PDF/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
