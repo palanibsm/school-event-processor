@@ -32,6 +32,8 @@ A mobile-friendly web app that extracts calendar events from school PDF communic
 6. Tap the **share icon** next to an event to send the link to other parents
 7. Optionally tap **"Download .ics file instead"** to get a calendar file with all events
 
+> **First-time setup:** To get two reminders (1 day + 30 min) on events added via Google Calendar links, follow the one-time setup in [CalendarSetup.md](CalendarSetup.md).
+
 ## Deploy Your Own
 
 ### Prerequisites
@@ -40,6 +42,7 @@ A mobile-friendly web app that extracts calendar events from school PDF communic
 - An [OpenAI API key](https://platform.openai.com/api-keys) (GPT-4o is used for extraction)
 - A [Google Cloud](https://console.cloud.google.com/) project for OAuth sign-in
 - A [Vercel](https://vercel.com/) account (free tier works)
+- **Google Calendar reminder setup** (one-time, on your phone) - see [CalendarSetup.md](CalendarSetup.md)
 
 ### 1. Clone and Install
 
