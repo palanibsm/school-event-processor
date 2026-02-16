@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@/auth";
 import { extractEventsFromImages } from "@/lib/openai";
 import { generateIcsContent } from "@/lib/calendar";
 import type { ExtractionRequest, ExtractionResponse } from "@/lib/types";
@@ -7,6 +8,11 @@ export const maxDuration = 60;
 
 export async function POST(request: NextRequest) {
   try {
+    const session = await auth();
+    if (!session) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const body: ExtractionRequest = await request.json();
 
     if (!body.images || body.images.length === 0) {
